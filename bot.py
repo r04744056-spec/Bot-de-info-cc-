@@ -2,7 +2,7 @@ import telebot, time, requests, random, threading, os, sqlite3
 from flask import Flask, request
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-TOKEN = os.environ.get("TOKEN", "9154649902:AAH_S1E4ndqEfZ2Yj1lofLn1UobcWfW5YdA")
+TOKEN = os.environ.get("TOKEN","9154649902:AAH_S1E4ndqEfZ2Yj1lofLn1UobcWfW5YdA")
 COVER_KEY = os.environ.get("COVER_KEY", "sk_live_IdzoQAz_HXooTnUQZRD_68HcB-5ZQj6H")
 COVER_URL = "https://api.coverpay.com.br/v1"
 ID_DONO = 8742219720 # <-- TROCA PELO SEU ID, manda /meuid no bot pra pegar

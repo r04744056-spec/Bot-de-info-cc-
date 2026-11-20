@@ -171,7 +171,7 @@ def start(m):
     mk.add(InlineKeyboardButton("🛒 Comprar", callback_data="menu_loja"))
     mk.add(InlineKeyboardButton("👤 Minha conta", callback_data="menu_conta"), InlineKeyboardButton("💠 PIX Rápido", callback_data="menu_pix"))
     mk.add(InlineKeyboardButton("📋 Regras", callback_data="menu_regras"), InlineKeyboardButton("🔄 Trocas", callback_data="menu_trocas"))
-    with open("IMG_1785.png", "rb") as foto:
+    with open("IMG_1430.jpeg", "rb") as foto:
         bot.send_photo(m.chat.id, foto, caption=texto, reply_markup=mk)
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith("menu_"))

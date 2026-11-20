@@ -4,7 +4,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 TOKEN = os.environ.get("TOKEN","9154649902:AAH_S1E4ndqEfZ2Yj1lofLn1UobcWfW5YdA")
 CORVER_KEY = os.environ.get("CORVER_KEY","sk_live_4n0Cs1egbMCER_n8BbQDYP3mtLRIm44B")
-CORVER_URL = "https://https://app.corvenpay.com/v1
+CORVER_URL = "https://https://app.corvenpay.com/v1"
 ID_DONO = 8742219720 # <-- TROCA PELO SEU ID, manda /meuid no bot pra pegar
 
 bot = telebot.TeleBot(TOKEN)

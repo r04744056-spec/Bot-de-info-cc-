@@ -154,7 +154,7 @@ def webhook():
         cur.execute("SELECT user_id, valor FROM depositos WHERE id=?", (ref,))
         dep = cur.fetchone()
         if dep:
-            cur.execute("DELETE FROM 
+                        cur.execute("DELETE FROM depositos WHERE id=?", (ref,))
 
 {"Approved": "False", "Response": "Not authorized", "Gate": "Assas Auth", "dev": "https://t.me/npnbit4", "Price": "0.00", "Time": "2.01s", "CC": "4381085031682075|01|31|471", "Raw": "{\"error\":\"N\u00e3o autorizado\"}", "Proxy": "direct", "Profile": "quero"}
 

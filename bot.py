@@ -476,7 +476,7 @@ def verificar_pendentes():
         except Exception as e:
             print("Erro verificacao:", e)
             time.sleep(30) 
-    @bot.message_handler(commands=['bin'])
+@bot.message_handler(commands=['bin'])
 def bin_cmd(message):
     try:
         partes = message.text.split()

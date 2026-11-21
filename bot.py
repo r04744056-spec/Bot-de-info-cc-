@@ -529,8 +529,6 @@ def bin_cmd(message):
                 f"🌍 *País:* {nome_pais}\n"
                 f"━━━━━━━━━━━━━━"
                 
-  def comprar_pelo_botao(uid, cod_key):
-    pr = get_produto(cod_key)
     if not pr:
         bot.send_message(uid, "❌ Produto não existe mais"); return
     if count_entrega(cod_key) == 0:

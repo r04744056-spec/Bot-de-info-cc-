@@ -528,16 +528,7 @@ def bin_cmd(message):
                 f"🏦 *Banco:* {nome_banco}\n"
                 f"🌍 *País:* {nome_pais}\n"
                 f"━━━━━━━━━━━━━━"
-                
-    if not pr:
-        bot.send_message(uid, "❌ Produto não existe mais"); return
-    if count_entrega(cod_key) == 0:
-        bot.send_message(uid, "❌ Esgotado!"); return
-    if saldo(uid) < pr[2]:
-        falta = pr[2] - saldo(uid)
-        bot.send_message(uid, f"❌ Falta R$ {falta:.2f} pra {pr[1]}\nRecarrega: /depositar {int(falta+5)}")
-        return
-            )
+                )
         
         bot.reply_to(message, resposta_final or "❌ BIN não encontrada ou inválida.\nUse 6 dígitos, exemplo: /bin 529982", parse_mode="Markdown")
     except Exception as e:

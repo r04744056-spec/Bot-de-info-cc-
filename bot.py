@@ -2,7 +2,21 @@ import os, requests, random, sqlite3
 from flask import Flask, request
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+import json
 
+ARQUIVO_BINS = "minhas_bins.json"
+
+def carregar_bins():
+    if os.path.exists(ARQUIVO_BINS):
+        with open(ARQUIVO_BINS, "r") as f:
+            return json.load(f)
+    return []
+
+def salvar_bins(lista):
+    with open(ARQUIVO_BINS, "w") as f:
+        json.dump(lista, f)
+
+MINHAS_BINS = carregar_bins()
 TOKEN = os.environ.get("TOKEN")
 GLADE_KEY = os.environ.get("GLADE_KEY")
 GLADE_URL = "https://web-production-73dbd.up.railway.app/api/v1"
@@ -479,22 +493,75 @@ def verificar_pendentes():
 @bot.message_handler(commands=['bin'])
 def bin_cmd(message):
     try:
-        partes = message.text.split()
-        if len(partes) < 2:
-            bot.reply_to(message, "Uso: /bin 0829\nExemplo: /bin 0829")
-            return
-        bin_digitada = partes[1].strip()
-        cur.execute("SELECT codigo_key, nome, preco, bandeira, tipo FROM produtos WHERE bin=?", (bin_digitada,))
-        rows = cur.fetchall()
-        if not rows:
-            bot.reply_to(message, f"❌ Nenhum produto com BIN {bin_digitada} encontrado.")
-            return
-        texto = f"🔍 BIN {bin_digitada} encontrada:\n\n"
-        for codigo, nome, preco, bandeira, tipo in rows:
-            texto += f"📦 {codigo}\n{nome}\n💰 R$ {preco:.2f}\n🏳️ Bandeira: {bandeira}\n🏷️ Tipo: {tipo}\n\n"
-        bot.reply_to(message, texto)
+        parts = message.text.split()
+        if len(parts) < 2:
+            bins = MINHAS_BINS
+            if not bins:
+                bot.reply_to(message, "Nenhuma BIN cadastrada ainda.\nUse: /addbin 0829")
+                return
+            resposta_final = "💳 *BINS DISPONÍVEIS:*\n"
+        else:
+            bins = parts[1:]
+            resposta_final = ""
+        for bin_code in bins:
+            bin_code = bin_code.strip().replace(",", "")[:8]
+            if not bin_code.isdigit() or len(bin_code) < 6:
+                continue
+            headers = {"Accept-Version": "3"}
+            r = requests.get(f"https://lookup.binlist.net/{bin_code}", headers=headers, timeout=10)
+            if r.status_code != 200:
+                continue
+            d = r.json()
+            bandeira = d.get("scheme", "Desconhecida").upper()
+            marca = d.get("brand", "Desconhecida")
+            tipo = d.get("type", "Desconhecido")
+            prepaid = "Sim" if d.get("prepaid") else "Não"
+            bank = d.get("bank") or {}
+            nome_banco = bank.get("name", "Desconhecido")
+            country = d.get("country") or {}
+            nome_pais = country.get("name", "Desconhecido")
+            resposta_final += (
+                f"\n💳 *BIN:* `{bin_code}`\n"
+                f"🏳️ *Bandeira:* {bandeira}\n"
+                f"🏷️ *Marca:* {marca}\n"
+                f"📦 *Tipo:* {tipo} | *Pré-pago:* {prepaid}\n"
+                f"🏦 *Banco:* {nome_banco}\n"
+                f"🌍 *País:* {nome_pais}\n"
+                f"━━━━━━━━━━━━━━"
+            )
+        bot.reply_to(message, resposta_final, parse_mode="Markdown")
     except Exception as e:
-        bot.reply_to(message, f"Erro ao buscar BIN: {e}")
+        bot.reply_to(message, f"Erro: {e}")
+
+@bot.message_handler(commands=['addbin'])
+def addbin_cmd(message):
+    if message.from_user.id != ID_DONO:
+        bot.reply_to(message, "Você não pode adicionar BINs.")
+        return
+    parts = message.text.split()
+    if len(parts) < 2:
+        bot.reply_to(message, "Uso: /addbin 0829")
+        return
+    for b in parts[1:]:
+        b = b.strip()[:8]
+        if b.isdigit() and b not in MINHAS_BINS:
+            MINHAS_BINS.append(b)
+    salvar_bins(MINHAS_BINS)
+    bot.reply_to(message, f"✅ Adicionada! Lista atual:\n`{' '.join(MINHAS_BINS)}`", parse_mode="Markdown")
+
+@bot.message_handler(commands=['delbin'])
+def delbin_cmd(message):
+    if message.from_user.id != ID_DONO:
+        return
+    parts = message.text.split()
+    if len(parts) < 2:
+        bot.reply_to(message, "Uso: /delbin 0829")
+        return
+    for b in parts[1:]:
+        if b in MINHAS_BINS:
+            MINHAS_BINS.remove(b)
+    salvar_bins(MINHAS_BINS)
+    bot.reply_to(message, f"🗑️ Removida! Lista atual:\n`{' '.join(MINHAS_BINS)}`", parse_mode="Markdown")
 if __name__ == "__main__":
     bot.remove_webhook()
     

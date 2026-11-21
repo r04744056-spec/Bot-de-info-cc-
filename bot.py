@@ -586,10 +586,7 @@ def callback_comprar(call):
     bot.answer_callback_query(call.id, "Processando...")
     comprar_pelo_botao(call.from_user.id, cod_key)
     try:
-        # Divide a mensagem: ["/addestoque", "item_padrao", "10"]
-        partes = message.text.split()
-        item_id = partes
-        quantidade = int(partes)
+        
 
         
 

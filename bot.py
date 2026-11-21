@@ -92,13 +92,13 @@ def criar_pix(ref, valor, desc):
     webhook = f"{RAILWAY_URL}/webhook/corvenpay" if RAILWAY_URL else ""
     dados = {"amount": int(valor*100), "paymentMethod": "pix", "description": desc, "external_id": ref, "webhook_url": webhook}
     try:
-        r = requests.post(COVER_URL + "/transactions", json=dados, headers=headers, timeout=15)
+        r = requests.post(COVER_URL + "/charges", json=dados, headers=headers, timeout=15)
         print("Corven:", r.status_code, r.text)
         if r.status_code in [200, 201]:
             j = r.json()
             pix = j.get("pix") or j.get("data") or j
             if isinstance(pix, dict):
-                return pix.get("copy_paste") or pix.get("pix_copy_paste") or pix.get("qr_code") or ""
+                return pix.get("copy_paste") or pix.get("pix_copy_paste") or pix.get("qrCodeBase64") or ""
             return str(pix)
     except Exception as e:
         print("Erro PIX:", e)

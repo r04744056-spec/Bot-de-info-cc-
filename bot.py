@@ -238,9 +238,13 @@ def depositar(m):
     con = sqlite3.connect(DB); cur = con.cursor()
     cur.execute("INSERT INTO depositos VALUES (?, ?, ?)", (dep_id, m.from_user.id, valor))
     con.commit(); con.close() 
-        copia = criar_pix(dep_id, valor, f"Deposito {dep_id}")
-    if not copia:
-        bot.send_message(m.chat.id, "Erro ao criar PIX")
+    copia, glade_id = criar_pix(dep_id, valor, f"Deposito {dep_id}")
+        if not copia:
+        bot.send_message(m.chat.id, "Erro ao criar PIX"); return
+    if glade_id:
+        con = sqlite3.connect(DB); cur = con.cursor()
+        cur.execute("INSERT OR IGNORE INTO depositos VALUES (?, ?, ?)", (glade_id, m.from_user.id, valor))
+        con.commit(); con.close()
     bot.send_message(m.chat.id, f"💰 DEPOSITO {dep_id}...
 
 @bot.message_handler(commands=['loja'])

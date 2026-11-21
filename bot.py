@@ -53,7 +53,7 @@ def init_db():
             ("NETFLIX02", "Netflix Premium - 1 mes", 22.00, "0830", "BR", "PREMIUM"),
             ("DISNEY01", "Disney+ Padrao - 1 mes", 12.00, "3040", "BR", "PADRAO"),
             ("DISNEY02", "Disney+ Premium - 1 mes", 18.00, "3041", "BR", "PREMIUM"),
-            ("EBOOK01", "E-book Renda Extra", 9.90, "5001", "BR", "UNICO"),
+            ("info cc", "purchasing card ", 15.00, "529982", "ld", "master"),
         ]
         cur.executemany("INSERT INTO produtos VALUES (?,?,?,?,?,?)", iniciais)
         con.commit()

@@ -476,7 +476,25 @@ def verificar_pendentes():
         except Exception as e:
             print("Erro verificacao:", e)
         time.sleep(30) 
-    
+    @bot.message_handler(commands=['bin'])
+def bin_cmd(message):
+    try:
+        partes = message.text.split()
+        if len(partes) < 2:
+            bot.reply_to(message, "Uso: /bin 0829\nExemplo: /bin 0829")
+            return
+        bin_digitada = partes[1].strip()
+        cur.execute("SELECT codigo_key, nome, preco, bandeira, tipo FROM produtos WHERE bin=?", (bin_digitada,))
+        rows = cur.fetchall()
+        if not rows:
+            bot.reply_to(message, f"❌ Nenhum produto com BIN {bin_digitada} encontrado.")
+            return
+        texto = f"🔍 BIN {bin_digitada} encontrada:\n\n"
+        for codigo, nome, preco, bandeira, tipo in rows:
+            texto += f"📦 {codigo}\n{nome}\n💰 R$ {preco:.2f}\n🏳️ Bandeira: {bandeira}\n🏷️ Tipo: {tipo}\n\n"
+        bot.reply_to(message, texto)
+    except Exception as e:
+        bot.reply_to(message, f"Erro ao buscar BIN: {e}")
 if __name__ == "__main__":
     bot.remove_webhook()
     

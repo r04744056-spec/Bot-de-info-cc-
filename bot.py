@@ -27,10 +27,9 @@ def init_db():
     cur.execute("CREATE TABLE IF NOT EXISTS entregas (id INTEGER PRIMARY KEY AUTOINCREMENT, codigo_key TEXT, conteudo TEXT)")
     cur.execute("CREATE TABLE IF NOT EXISTS pedidos (id TEXT PRIMARY KEY, user_id INTEGER, produto TEXT, codigo TEXT, level TEXT, codigo_key TEXT, status TEXT)")
     cur.execute("CREATE TABLE IF NOT EXISTS depositos (id TEXT PRIMARY KEY, user_id INTEGER, valor REAL)")
-    try:
+        cols = [r[1] for r in cur.execute("PRAGMA table_info(produtos)")]
+    if "bandeira" not in cols:
         cur.execute("ALTER TABLE produtos ADD COLUMN bandeira TEXT DEFAULT 'BR'")
-except:
-    pass  
     con.commit()
     cur.execute("SELECT COUNT(*) FROM produtos")
     if cur.fetchone()[0] == 0:

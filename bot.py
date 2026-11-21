@@ -230,7 +230,7 @@ def voltar_inicio(call):
     bot.answer_callback_query(call.id)
     start(call.message)
 
-@bot.message_handler(commands=['depositar'])
+@bot.message_handler(commands=['pix', 'depositar'])
 def depositar(m):
     p = m.text.split()
     if len(p) < 2:

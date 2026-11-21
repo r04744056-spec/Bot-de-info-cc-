@@ -316,7 +316,7 @@ def resgatar(m):
     bot.send_message(m.chat.id, f"🎁 Você resgatou R$ {valor:.2f}!\nNovo saldo: R$ {saldo(uid):.2f}")
 # ============ PAINEL DO DONO ============
 def so_dono(m):
-    return m.from_user.id == ID_DONO = ID_DONO = 8742219720
+    return m.from_user.id == ID_DONO 
 
 @bot.message_handler(commands=['meuid'])
 def meuid(m):

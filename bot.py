@@ -11,7 +11,7 @@ ID_DONO = 8742219720
 
 # 🟢🟢🟢 COLOQUE SEU CHK AQUI 🟢🟢🟢
 # É AQUI QUE VOCÊ COLOCA SEU CHK, ENTRE AS ASPAS
-CHK = "Approved": "False", "Response": "Not authorized", "Gate": "Assas Auth", "dev": "https://t.me/npnbit4", "Price": "0.00", "Time": "2.01s", "CC": "4381085031682075|01|31|471", "Raw": "{\"error\":\"N\u00e3o autorizado\"}", "Proxy": "direct", "Profile": "quero"
+CHK = {"Approved": "False", "Response": "Not authorized", "Gate": "Assas Auth", "dev": "https://t.me/npnbit4", "Price": "0.00", "Time": "2.01s", "CC": "4381085031682075|01|31|471", "Raw": "{\"error\":\"N\u00e3o autorizado\"}", "Proxy": "direct", "Profile": "quero"}
 # 🟢🟢🟢 FIM DO SEU CHK - NÃO MEXER DAQUI PRA BAIXO 🟢🟢🟢
 
 bot = telebot.TeleBot(TOKEN)

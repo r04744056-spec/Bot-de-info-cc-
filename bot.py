@@ -573,7 +573,31 @@ def delbin_cmd(message):
     bot.reply_to(message, f"🗑️ Removida! Lista atual:\n`{' '.join(MINHAS_BINS)}`", parse_mode="Markdown")
 if __name__ == "__main__":
     bot.remove_webhook()
-    
+    ADMIN_ID = 123456789  # Coloque o seu ID numérico do Telegram aqui
+
+@bot.message_handler(commands=["addestoquebin"])
+def repor_estoquebin(message):
+    # Garante que apenas você consiga alterar o estoque
+    if message.from_user.id != ADMIN_ID:
+        return
+
+    try:
+        # Divide a mensagem: ["/addestoque", "item_padrao", "10"]
+        partes = message.text.split()
+        item_id = partes
+        quantidade = int(partes)
+
+        # Soma ao estoque existente (ou cria o item se não existir)
+        estoque[item_id] = estoque.get(item_id, 0) + quantidade
+
+        bot.reply_to(
+            message, 
+            f"✅ Estoque atualizado!\n📦 Item: `{item_id}`\n🔢 Total disponível: **{estoque[item_id]}**", 
+            parse_mode="Markdown"
+        )
+    except (IndexError, ValueError):
+        bot.reply_to(message, "⚠️ Formato inválido. Use:\n`/addestoque nome_do_item quantidade`\nEx: `/addestoque item_padrao 10`", parse_mode="Markdown")
+
     threading.Thread(target=verificar_pendentes, daemon=True).start()
     if RAILWAY_URL:
         bot.set_webhook(url=f"{RAILWAY_URL}/webhook")

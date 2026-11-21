@@ -245,7 +245,7 @@ def depositar(m):
         con = sqlite3.connect(DB); cur = con.cursor()
         cur.execute("INSERT OR IGNORE INTO depositos VALUES (?, ?, ?)", (glade_id, m.from_user.id, valor))
         con.commit(); con.close()
-    bot.send_message(m.chat.id, f"💰 DEPOSITO {dep_id}...
+    bot.send_message(m.chat.id, f"DEPOSITO {dep_id} R$ {valor:.2f} PIX: {copia}")
 
 @bot.message_handler(commands=['loja'])
 def loja(m):

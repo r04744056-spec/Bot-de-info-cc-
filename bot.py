@@ -237,7 +237,7 @@ def depositar(m):
     dep_id = "DEP" + str(random.randint(1000, 9999))
     con = sqlite3.connect(DB); cur = con.cursor()
     cur.execute("INSERT INTO depositos VALUES (?, ?, ?)", (dep_id, m.from_user.id, valor))
-    con.commit(); con.close()
+    con.commit(); con.close() 
         copia = criar_pix(dep_id, valor, f"Deposito {dep_id}")
     if not copia:
         bot.send_message(m.chat.id, "Erro ao criar PIX")

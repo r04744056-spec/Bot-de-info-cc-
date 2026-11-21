@@ -534,23 +534,11 @@ def bin_cmd(message):
     # Cria o botão "Comprar" apenas se houver alguma resposta válida
         if resposta_final:
             markup = InlineKeyboardMarkup()
-        botao_comprar = InlineKeyboardButton(
-            text="🛒 Comprar", 
-            callback_data="comprar_item"
-        )
-        markup.add(botao_comprar)
-
-        bot.reply_to(
-            message, 
-            resposta_final, 
-            parse_mode="Markdown", 
-            reply_markup=markup
-        )
+            markup.add(InlineKeyboardButton("🛒 Comprar", callback_data="comprar_item"))
+            bot.reply_to(message, resposta_final, parse_mode="Markdown", reply_markup=markup)
         else:
-        bot.reply_to(message, "❌ BIN não encontrada.")
+            bot.reply_to(message, "❌ BIN não encontrada.")
 
-        
-        bot.reply_to(message, resposta_final or "❌ BIN não encontrada ou inválida.\nUse 6 dígitos, exemplo: /bin 529982", parse_mode="Markdown")
     except Exception as e:
         bot.reply_to(message, f"Erro: {e}")
         

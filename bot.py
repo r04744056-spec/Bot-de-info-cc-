@@ -197,11 +197,12 @@ def home():
 @bot.message_handler(commands=['start'])
 def start(m):
     uid = m.from_user.id
-    texto = f"💰 Carteira:\n ID: {uid}\n..."
+    s = saldo(uid)
+    texto = f"💰 Carteira:\nID: {uid}\nSaldo: R$ {s:.2f}\nPendência: R$ 0.00"
     mk = InlineKeyboardMarkup()
-    mk.add(InlineKeyboardButton("🛒 Comprar", callback_data="comprar"))
-    mk.add(InlineKeyboardButton("👤 Minha conta", callback_data="conta"))
-    mk.add(InlineKeyboardButton("📜 Regras", callback_data="regras"))
+    mk.add(InlineKeyboardButton("🛒 Comprar", callback_data="menu_loja"))
+    mk.add(InlineKeyboardButton("👤 Minha conta", callback_data="menu_conta"))
+    mk.add(InlineKeyboardButton("📜 Regras", callback_data="menu_regras"))
     try:
         with open("IMG_1430.jpeg", "rb") as foto:
             bot.send_photo(m.chat.id, foto, caption=texto, reply_markup=mk)

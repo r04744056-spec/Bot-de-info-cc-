@@ -532,7 +532,7 @@ def bin_cmd(message):
         )
 
     # Cria o botão "Comprar" apenas se houver alguma resposta válida
-    if resposta_final:
+        if resposta_final:
         markup = InlineKeyboardMarkup()
         botao_comprar = InlineKeyboardButton(
             text="🛒 Comprar", 
@@ -546,7 +546,7 @@ def bin_cmd(message):
             parse_mode="Markdown", 
             reply_markup=markup
         )
-    else:
+        else:
         bot.reply_to(message, "❌ BIN não encontrada.")
 
         

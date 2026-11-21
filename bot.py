@@ -3,6 +3,7 @@ from flask import Flask, request
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import json
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 ARQUIVO_BINS = "minhas_bins.json"
 
@@ -521,14 +522,33 @@ def bin_cmd(message):
             country = d.get("country") or {}
             nome_pais = country.get("name", "Desconhecido")
             resposta_final += (
-                f"\n💳 *BIN:* `{bin_code}`\n"
-                f"🏳️ *Bandeira:* {bandeira}\n"
-                f"🏷️ *Marca:* {marca}\n"
-                f"📦 *Tipo:* {tipo} | *Pré-pago:* {prepaid}\n"
-                f"🏦 *Banco:* {nome_banco}\n"
-                f"🌍 *País:* {nome_pais}\n"
-                f"━━━━━━━━━━━━━━"
-                )
+            f"\n💳 *BIN:* `{bin_code}`\n"
+            f"🏳️ *Bandeira:* {bandeira}\n"
+            f"🏷️ *Marca:* {marca}\n"
+            f"💠 *Tipo:* {tipo} | *Pré-pago:* {prepaid}\n"
+            f"🏦 *Banco:* {nome_banco}\n"
+            f"🌎 *País:* {nome_pais}\n"
+            f"━━━━━━━━━━━━━━━━━━━━"
+        )
+
+    # Cria o botão "Comprar" apenas se houver alguma resposta válida
+    if resposta_final:
+        markup = InlineKeyboardMarkup()
+        botao_comprar = InlineKeyboardButton(
+            text="🛒 Comprar", 
+            callback_data="comprar_item"
+        )
+        markup.add(botao_comprar)
+
+        bot.reply_to(
+            message, 
+            resposta_final, 
+            parse_mode="Markdown", 
+            reply_markup=markup
+        )
+    else:
+        bot.reply_to(message, "❌ BIN não encontrada.")
+
         
         bot.reply_to(message, resposta_final or "❌ BIN não encontrada ou inválida.\nUse 6 dígitos, exemplo: /bin 529982", parse_mode="Markdown")
     except Exception as e:

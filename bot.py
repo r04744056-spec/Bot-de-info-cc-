@@ -28,7 +28,7 @@ def init_db():
     cur.execute("CREATE TABLE IF NOT EXISTS pedidos (id TEXT PRIMARY KEY, user_id INTEGER, produto TEXT, codigo TEXT, level TEXT, codigo_key TEXT, status TEXT)")
     cur.execute("CREATE TABLE IF NOT EXISTS depositos (id TEXT PRIMARY KEY, user_id INTEGER, valor REAL)")
     try:
-    cur.execute("ALTER TABLE produtos ADD COLUMN bandeira TEXT DEFAULT 'BR'")
+        cur.execute("ALTER TABLE produtos ADD COLUMN bandeira TEXT DEFAULT 'BR'")
 except:
     pass  
     con.commit()

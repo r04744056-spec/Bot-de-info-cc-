@@ -533,11 +533,7 @@ def bin_cmd(message):
         bot.reply_to(message, resposta_final or "❌ BIN não encontrada ou inválida.\nUse 6 dígitos, exemplo: /bin 529982", parse_mode="Markdown")
     except Exception as e:
         bot.reply_to(message, f"Erro: {e}")
-        def comprar_pelo_botao(uid, cod_key):
-    pr = get_produto(cod_key)
-    if not pr:
-        bot.send_message(uid, "❌ Produto não existe mais"); return
-
+        
 @bot.message_handler(commands=['addbin'])
 def addbin_cmd(message):
     if message.from_user.id != ID_DONO:

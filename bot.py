@@ -395,8 +395,38 @@ def ver_saldo(m):
     uid = int(p[1])
     bot.send_message(m.chat.id, f"Saldo de {uid}: R$ {saldo(uid):.2f}")
 
-if __name__ == "__main__":
-    bot.remove_webhook()
+import threading, time
+
+def verificar_pendentes():
+    while True:
+        try:
+            con = sqlite3.connect(DB); cur = con.cursor()
+            cur.execute("SELECT glade_id, user_id, valor, dep_id FROM depositos WHERE status='pendente'")
+            for glade_id, user_id, valor, dep_id in cur.fetchall():
+                try:
+                    headers = {"X-API-Key": str(GLADE_KEY), "Content-Type": "application/json"}
+                    pago = False
+                    for url in [f"{GLADE_URL}/pix/status/{dep_id}", f"{GLADE_URL}/pix/{dep_id}"]:
+                        r = requests.get(url, headers=headers, timeout=10)
+                        if r.status_code in [200, 201] and ("paid" in r.text.lower() or "approved" in r.text.lower() or "aprovado" in r.text.lower()):
+                            pago = True
+                            break
+                    if pago:
+                        cur.execute("UPDATE depositos SET status='pago' WHERE dep_id=?", (dep_id,))
+                        cur.execute("UPDATE usuarios SET saldo=saldo+? WHERE id=?", (valor, user_id))
+                        con.commit()
+                        bot.send_message(user_id, f"✅ Pagamento aprovado!\nR$ {valor:.2f} creditado!")
+                except Exception as e:
+                    print("Erro check:", e)
+            con.commit(); con.close()
+        except Exception as e:
+            print("Erro verificacao:", e)
+        time.sleep(30) 
+        
+ if __name__ == "__main__":
+     bot.remove_webhook()
+    
+ threading.Thread(target=verificar_pendentes, daemon=True).start()
     if RAILWAY_URL:
         bot.set_webhook(url=f"{RAILWAY_URL}/webhook")
     port = int(os.environ.get("PORT", 8080))

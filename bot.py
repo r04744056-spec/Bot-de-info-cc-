@@ -528,6 +528,7 @@ def bin_cmd(message):
                 f"🏦 *Banco:* {nome_banco}\n"
                 f"🌍 *País:* {nome_pais}\n"
                 f"━━━━━━━━━━━━━━"
+                
   def comprar_pelo_botao(uid, cod_key):
     pr = get_produto(cod_key)
     if not pr:

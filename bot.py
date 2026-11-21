@@ -249,9 +249,9 @@ def depositar(m):
     qr = qrcode.make(copia)
     qr.save("qr.png")
     with open("IMG_1430.jpeg","rb") as foto:
-    bot.send_photo(m.chat.id, foto, caption=f"💰 DEPOSITO {dep_id}\nR$ {valor:.2f}\n\nPIX COPIA E COLA:\n{copia}")
+        bot.send_photo(m.chat.id, foto, caption=f"💰 DEPOSITO {dep_id}\nR$ {valor:.2f}\n\nPIX COPIA E COLA:\n{copia}")
     with open("qr.png","rb") as q:
-    bot.send_photo(m.chat.id, q, caption="📷 Escaneie o QR Code para pagar")
+        bot.send_photo(m.chat.id, q, caption="📷 Escaneie o QR Code para pagar")
 
 @bot.message_handler(commands=['loja'])
 def loja(m):

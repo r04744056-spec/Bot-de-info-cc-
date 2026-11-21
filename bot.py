@@ -5,7 +5,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 TOKEN = os.environ.get("TOKEN")
 COVER_KEY = os.environ.get("COVER_KEY")
-COVER_URL = "https://api.coverpay.com.br/v1"
+COVER_URL = "https://app.corvenpay.com/v1"
 RAILWAY_URL = os.environ.get("RAILWAY_URL", "")
 ID_DONO = 8742219720
 

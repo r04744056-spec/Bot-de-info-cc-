@@ -267,10 +267,56 @@ def callback_comprar(call):
     cod_key = call.data.replace("comprar_", "")
     bot.answer_callback_query(call.id, "Processando...")
     comprar_pelo_botao(call.from_user.id, cod_key)
+# ===== SISTEMA DE GIFT =====
+def criar_tabela_gift():
+    con = sqlite3.connect(DB)
+    con.execute("CREATE TABLE IF NOT EXISTS gifts (codigo TEXT PRIMARY KEY, valor REAL, usado_por INTEGER)")
+    con.commit()
+    con.close()
+criar_tabela_gift()
 
+@bot.message_handler(commands=['gerargift'])
+def gerargift(m):
+    if not so_dono(m):
+        return bot.send_message(m.chat.id, "❌ Só o dono pode usar isso.")
+    try:
+        _, valor, codigo = m.text.split()
+        valor = float(valor)
+        con = sqlite3.connect(DB)
+        con.execute("INSERT INTO gifts VALUES (?,?,NULL)", (codigo.upper(), valor))
+        con.commit()
+        con.close()
+        bot.send_message(m.chat.id, f"✅ Gift criado!\nCódigo: {codigo.upper()}\nValor: R$ {valor:.2f}\n\nCliente resgata com: /resgatar {codigo.upper()}")
+    except:
+        bot.send_message(m.chat.id, "Usa assim: /gerargift 10 NATAL10")
+
+@bot.message_handler(commands=['resgatar'])
+def resgatar(m):
+    try:
+        codigo = m.text.split()[1].upper()
+    except:
+        return bot.send_message(m.chat.id, "Usa assim: /resgatar NATAL10")
+    con = sqlite3.connect(DB)
+    cur = con.cursor()
+    cur.execute("SELECT valor, usado_por FROM gifts WHERE codigo=?", (codigo,))
+    r = cur.fetchone()
+    if not r:
+        con.close()
+        return bot.send_message(m.chat.id, "❌ Código inválido.")
+    if r[1] is not None:
+        con.close()
+        return bot.send_message(m.chat.id, "❌ Esse gift já foi usado.")
+    valor = r[0]
+    uid = m.from_user.id
+    cur.execute("INSERT OR IGNORE INTO carteira (user_id, saldo) VALUES (?,0)", (uid,))
+    cur.execute("UPDATE carteira SET saldo = saldo + ? WHERE user_id=?", (valor, uid))
+    cur.execute("UPDATE gifts SET usado_por=? WHERE codigo=?", (uid, codigo))
+    con.commit()
+    con.close()
+    bot.send_message(m.chat.id, f"🎁 Você resgatou R$ {valor:.2f}!\nNovo saldo: R$ {saldo(uid):.2f}")
 # ============ PAINEL DO DONO ============
 def so_dono(m):
-    return m.from_user.id == ID_DONO
+    return m.from_user.id == ID_DONO = ID_DONO = 8742219720
 
 @bot.message_handler(commands=['meuid'])
 def meuid(m):

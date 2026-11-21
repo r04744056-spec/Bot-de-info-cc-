@@ -475,7 +475,7 @@ def verificar_pendentes():
             con.commit(); con.close()
         except Exception as e:
             print("Erro verificacao:", e)
-        time.sleep(30) 
+            time.sleep(30) 
     @bot.message_handler(commands=['bin'])
 def bin_cmd(message):
     try:

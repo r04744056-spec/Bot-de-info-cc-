@@ -3,7 +3,7 @@ from flask import Flask, request
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 TOKEN = os.environ.get("TOKEN")
-COVER_KEY = os.environ.get("COVER_KEY", "sk_live_4n0Cs1egbMCER_n8BbQDYP3mtLRIm44B")
+COVER_KEY = os.environ.get("COVER_KEY")
 COVER_URL = os.environ.get("COVER_URL", "https://app.corvenpay.com/v1").strip().rstrip("/")
 ID_DONO = 8742219720 # <-- TROCA PELO SEU ID, manda /meuid no bot pra pegar
 

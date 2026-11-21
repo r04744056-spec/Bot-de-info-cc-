@@ -48,7 +48,7 @@ def init_db():
     cur.execute("SELECT COUNT(*) FROM produtos")
     if cur.fetchone()[0] == 0:
         iniciais = [
-            ("NETFLIX01", "Netflix - 1 mes", 15.00, "0829", "BR", "PADRAO"),
+            ("NETFLIX01", "Netflix - 1 mes", 15.00, "529982", "BR", "PADRAO"),
             ("NETFLIX02", "Netflix Premium - 1 mes", 22.00, "0830", "BR", "PREMIUM"),
             ("DISNEY01", "Disney+ Padrao - 1 mes", 12.00, "3040", "BR", "PADRAO"),
             ("DISNEY02", "Disney+ Premium - 1 mes", 18.00, "3041", "BR", "PREMIUM"),
@@ -77,7 +77,7 @@ def sub_saldo(uid, valor):
 
 def get_produtos():
     con = sqlite3.connect(DB); cur = con.cursor()
-    cur.execute("SELECT codigo_key, nome, preco, codigo, level FROM produtos ORDER BY preco ASC")
+    cur.execute("SELECT codigo_key, nome, preco, codigo, bin, level FROM produtos ORDER BY preco ASC")
     rows = cur.fetchall(); con.close()
     return rows
 
@@ -374,7 +374,7 @@ def addproduto(m):
         level = partes[-1].upper()
         nome = " ".join(partes[2:-3])
         con = sqlite3.connect(DB); cur = con.cursor()
-        cur.execute("INSERT OR REPLACE INTO produtos VALUES (?, ?, ?, ?, ?)", (chave, nome, preco, codigo, level))
+        cur.execute("INSERT OR REPLACE INTO produtos VALUES (?, ?, ?, ?, ?)", (bin, nome, preco, codigo, level))
         con.commit(); con.close()
         bot.send_message(m.chat.id, f"✅ Produto criado!\n\n{chave} - {nome}\nR$ {preco:.2f} | Codigo {codigo} | {level}\n\nAgora adiciona estoque:\n/addentrega {chave} Login: xxx | Senha: yyy")
     except Exception as e:

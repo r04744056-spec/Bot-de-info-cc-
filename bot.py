@@ -532,7 +532,7 @@ def bin_cmd(message):
     if not resposta_final.strip():
             bot.reply_to(message, "❌ BIN não encontrada ou inválida.\nUse 6 dígitos, exemplo: /bin 529982")
             return
-        bot.reply_to(message, resposta_final, parse_mode="Markdown")
+        bot.reply_to(message, resposta_final or "❌ BIN não encontrada ou inválida.\nUse 6 dígitos, exemplo: /bin 529982", parse_mode="Markdown")
     except Exception as e:
         bot.reply_to(message, f"Erro: {e}")
 

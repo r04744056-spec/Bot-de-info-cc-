@@ -27,17 +27,21 @@ def init_db():
     cur.execute("CREATE TABLE IF NOT EXISTS entregas (id INTEGER PRIMARY KEY AUTOINCREMENT, codigo_key TEXT, conteudo TEXT)")
     cur.execute("CREATE TABLE IF NOT EXISTS pedidos (id TEXT PRIMARY KEY, user_id INTEGER, produto TEXT, codigo TEXT, level TEXT, codigo_key TEXT, status TEXT)")
     cur.execute("CREATE TABLE IF NOT EXISTS depositos (id TEXT PRIMARY KEY, user_id INTEGER, valor REAL)")
+    try:
+    cur.execute("ALTER TABLE produtos ADD COLUMN bandeira TEXT DEFAULT 'BR'")
+except:
+    pass  
     con.commit()
     cur.execute("SELECT COUNT(*) FROM produtos")
     if cur.fetchone()[0] == 0:
         iniciais = [
-            ("NETFLIX01", "Netflix - 1 mes", 15.00, "0829", "PADRAO"),
-            ("NETFLIX02", "Netflix Premium - 1 mes", 22.00, "0830", "PREMIUM"),
-            ("DISNEY01", "Disney+ Padrao - 1 mes", 12.00, "3040", "PADRAO"),
-            ("DISNEY02", "Disney+ Premium - 1 mes", 18.00, "3041", "PREMIUM"),
-            ("EBOOK01", "E-book Renda Extra", 9.90, "5001", "UNICO"),
+            ("NETFLIX01", "Netflix - 1 mes", 15.00, "0829", "BR", "PADRAO"),
+            ("NETFLIX02", "Netflix Premium - 1 mes", 22.00, "0830", "BR", "PREMIUM"),
+            ("DISNEY01", "Disney+ Padrao - 1 mes", 12.00, "3040", "BR", "PADRAO"),
+            ("DISNEY02", "Disney+ Premium - 1 mes", 18.00, "3041", "BR", "PREMIUM"),
+            ("EBOOK01", "E-book Renda Extra", 9.90, "5001", "BR", "UNICO"),
         ]
-        cur.executemany("INSERT INTO produtos VALUES (?,?,?,?,?)", iniciais)
+        cur.executemany("INSERT INTO produtos VALUES (?,?,?,?,?,?)", iniciais)
         con.commit()
     con.close()
 init_db()

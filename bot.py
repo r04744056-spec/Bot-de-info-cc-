@@ -533,7 +533,7 @@ def bin_cmd(message):
 
     # Cria o botão "Comprar" apenas se houver alguma resposta válida
         if resposta_final:
-        markup = InlineKeyboardMarkup()
+            markup = InlineKeyboardMarkup()
         botao_comprar = InlineKeyboardButton(
             text="🛒 Comprar", 
             callback_data="comprar_item"

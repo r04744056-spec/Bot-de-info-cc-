@@ -99,20 +99,20 @@ def criar_pix(ref, valor, desc):
             j = r.json()
             data = j.get("data") if isinstance(j.get("data"), dict) else j
             copia = (
-                data.get("pixCopyPaste")
+                data.get("qrCodeText")
+                or data.get("qrCode")
+                or data.get("pixCopyPaste")
                 or data.get("copyPaste")
                 or data.get("pix_copy_paste")
                 or data.get("copy_paste")
-                or data.get("qrCode")
-                or data.get("qr_code")
                 or data.get("payload")
-                or data.get("emv")
                 or ""
             )
-            return copia
+            glade_id = data.get("id") or data.get("transactionId") or ""
+            return copia, glade_id
     except Exception as e:
         print("Erro PIX:", e)
-    return None
+    return None, None
 
 def entregar(pid):
     con = sqlite3.connect(DB); cur = con.cursor()
@@ -238,10 +238,10 @@ def depositar(m):
     con = sqlite3.connect(DB); cur = con.cursor()
     cur.execute("INSERT INTO depositos VALUES (?, ?, ?)", (dep_id, m.from_user.id, valor))
     con.commit(); con.close()
-    copia = criar_pix(dep_id, valor, f"Deposito {dep_id}")
+        copia = criar_pix(dep_id, valor, f"Deposito {dep_id}")
     if not copia:
-        bot.send_message(m.chat.id, "Erro ao criar PIX"); return
-    bot.send_message(m.chat.id, f"💰 DEPOSITO {dep_id}\nR$ {valor:.2f}\n\nPIX:\n{copia}")
+        bot.send_message(m.chat.id, "Erro ao criar PIX")
+    bot.send_message(m.chat.id, f"💰 DEPOSITO {dep_id}...
 
 @bot.message_handler(commands=['loja'])
 def loja(m):

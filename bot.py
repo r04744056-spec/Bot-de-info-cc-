@@ -422,11 +422,11 @@ def verificar_pendentes():
         except Exception as e:
             print("Erro verificacao:", e)
         time.sleep(30) 
-        
- if __name__ == "__main__":
-     bot.remove_webhook()
     
- threading.Thread(target=verificar_pendentes, daemon=True).start()
+if __name__ == "__main__":
+    bot.remove_webhook()
+    
+    threading.Thread(target=verificar_pendentes, daemon=True).start()
     if RAILWAY_URL:
         bot.set_webhook(url=f"{RAILWAY_URL}/webhook")
     port = int(os.environ.get("PORT", 8080))

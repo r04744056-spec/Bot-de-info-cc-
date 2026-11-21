@@ -245,7 +245,13 @@ def depositar(m):
         con = sqlite3.connect(DB); cur = con.cursor()
         cur.execute("INSERT OR IGNORE INTO depositos VALUES (?, ?, ?)", (glade_id, m.from_user.id, valor))
         con.commit(); con.close()
-    bot.send_message(m.chat.id, f"DEPOSITO {dep_id} R$ {valor:.2f} PIX: {copia}")
+    import qrcode
+    qr = qrcode.make(copia)
+    qr.save("qr.png")
+    with open("IMG_1430.jpeg","rb") as foto:
+    bot.send_photo(m.chat.id, foto, caption=f"💰 DEPOSITO {dep_id}\nR$ {valor:.2f}\n\nPIX COPIA E COLA:\n{copia}")
+    with open("qr.png","rb") as q:
+    bot.send_photo(m.chat.id, q, caption="📷 Escaneie o QR Code para pagar")
 
 @bot.message_handler(commands=['loja'])
 def loja(m):

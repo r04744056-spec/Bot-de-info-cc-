@@ -182,7 +182,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
         "💳 **Comprar CC**: /comprar\n"
         "🎁 **Resgatar Gift Card**: /resgatar <codigo>\n"
         "💰 **Depósito Pix**: /pix\n"
-        "👤 **Meu Perfil**: /perfil"):
+        "👤 **Meu Perfil**: /perfil")
 
 async def perfil(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
     user = update.effective_user

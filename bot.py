@@ -369,7 +369,7 @@ if __name__ == '__main__':
 async def add_product_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     # Verifica se é admin (troque ID se necessário)
-    if user.id != ADMIN_ID:
+    if user.id != 8742219720:
         await update.message.reply_text("🔒 Apenas administradores podem adicionar produtos.")
         return
 

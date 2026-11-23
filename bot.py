@@ -459,11 +459,12 @@ def warranty_worker():
                     BOT.send_message(o["user_id"], f"Garantia do #{o['id']} encerrada."), LOOP)
         c.commit(); c.close()
         time.sleep(30)
-
+   app.add_handler(CommandHandler("gerar", gerar))
+   app.add_handler(CommandHandler("resgatar", resgatar))
 def main():
     global BOT, LOOP
     init_db()
-    init_gifts()
+    
     app = Application.builder().token(TOKEN).build()
     BOT = app.bot
     LOOP = asyncio.get_event_loop()

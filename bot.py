@@ -16,7 +16,7 @@ DB        = os.environ.get("DB_PATH", "store.db")
 WARRANTY  = int(os.environ.get("WARRANTY_MIN", "180"))
 PORT      = int(os.environ.get("PORT", "8080"))
 
-GLADE_BASE   = os.environ.get("GLADE_BASE", "https://api.glade.ng")
+GLADE_URL   = os.environ.get("GLADE_BASE", "https://https://web-production-73dbd.up.railway.app/api/v1")
 GLADE_KEY    = os.environ.get("GLADE_KEY", "")
 GLADE_MID    = os.environ.get("GLADE_MID", "")
 GLADE_SECRET = os.environ.get("GLADE_SECRET", "troque")

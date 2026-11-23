@@ -17,7 +17,7 @@ TOKEN = os.getenv("TELEGRAM_TOKEN")
 GLADE_API_KEY = os.getenv("GLADE_API_KEY")
 BASE_URL = os.getenv("GLADE_BASE_URL", "https://api.gladepay.com/v1") # Ajuste se necessário
 CALLBACK_URL = os.getenv("CALLBACK_URL", "https://seusite.com/callback") # Exemplo genérico
-ADMIN_ID = 987654321  # <-- TROQUE PELO SEU ID NUMÉRICO DO TELEGRAM
+ADMIN_ID = 8742219720  # <-- TROQUE PELO SEU ID NUMÉRICO DO TELEGRAM
 
 app = Flask(__name__)
 
@@ -47,6 +47,39 @@ cur.execute('''CREATE TABLE IF NOT EXISTS produtos (
 conn.commit()
 
 # ================= FUNÇÕES AUXILIARES =================
+
+# --- ESTOQUE / ABASTECER ---
+SEU_ID = 8742219720 # <- coloca seu ID do Telegram aqui
+
+ESTOQUE = {
+    "seguidores_1000": 100,
+    "seguidores_5000": 50,
+    "curtidas_1000": 200,
+}
+
+@bot.message_handler(commands=['abastecer'])
+def abastecer(message):
+    if message.from_user.id != SEU_ID:
+        bot.reply_to(message, "Você não tem permissão.")
+        return
+
+    # Uso: /abastecer seguidores_1000 50
+    try:
+        _, produto, qtd = message.text.split()
+        qtd = int(qtd)
+        ESTOQUE[produto] = ESTOQUE.get(produto, 0) + qtd
+        bot.reply_to(message, f"✅ Abastecido!\n\nProduto: {produto}\nAdicionado: {qtd}\nEstoque agora: {ESTOQUE[produto]}")
+    except:
+        bot.reply_to(message, "Uso certo:\n/abastecer seguidores_1000 50\n\nProdutos que você tem:\n" + "\n".join(ESTOQUE.keys()))
+
+@bot.message_handler(commands=['estoque'])
+def ver_estoque(message):
+    if message.from_user.id != SEU_ID:
+        return
+    texto = "📦 Seu estoque:\n\n"
+    for produto, qtd in ESTOQUE.items():
+        texto += f"{produto}: {qtd}\n"
+    bot.reply_to(message, texto)
 
 def pegar_saldo(uid, nome=""):
     cur.execute("SELECT saldo FROM carteira WHERE user_id=?", (uid,))
@@ -115,7 +148,30 @@ def formatar_card(prod):
         f"🛡️ Status: {'LIVE' if prod[8] else 'MORTO'}\n"
         f"💰 Preço: R$ {prod[11]:.2f}"
     )
+# --- SEU START NOVO - SÓ BOTÃO COMPRAR ---
+@bot.message_handler(commands=['start'])
+def start(message):
+    markup = InlineKeyboardMarkup()
+    markup.add(InlineKeyboardButton("🛒 Comprar", callback_data="comprar"))
+    bot.send_message(message.chat.id, "Bem-vindo! Clique abaixo para comprar:", reply_markup=markup)
 
+# --- SEUS DEF QUE JÁ TINHA - NÃO APAGA, DEIXA AQUI EMBAIXO ---
+@bot.callback_query_handler(func=lambda call: call.data == "depositar")
+def depositar(call):
+    # seu código de depósito que já tinha, deixa igual
+    pass
+
+@bot.callback_query_handler(func=lambda call: call.data == "saldo")
+def saldo(call):
+    # seu código de saldo que já tinha, deixa igual
+    pass
+
+@bot.callback_query_handler(func=lambda call: call.data == "comprar")
+def comprar(call):
+    # seu código de comprar
+    pass
+
+bot.polling()
 # ================= TELEGRAM BOT =================
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -340,7 +396,7 @@ if __name__ == '__main__':
 async def add_product_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     # Verifica se é admin (troque ID se necessário)
-    if user.id != ADMIN_ID: 
+    if user.id != ADMIN_ID: 8742219720
         await update.message.reply_text("🔒 Apenas administradores podem adicionar produtos.")
         return
 

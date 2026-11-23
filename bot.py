@@ -9,12 +9,15 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
 import re
 from datetime import datetime
+import telebot
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 # ================= CONFIGURAÇÕES =================
 load_dotenv()
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
+bot = telebot.TeleBot(TOKEN)
 GLADE_API_KEY = os.getenv("GLADE_API_KEY")
 BASE_URL = os.getenv("GLADE_BASE_URL", "https://api.gladepay.com/v1") # Ajuste se necessário
 CALLBACK_URL = os.getenv("CALLBACK_URL", "https://seusite.com/callback") # Exemplo genérico

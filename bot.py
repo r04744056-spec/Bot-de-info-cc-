@@ -446,24 +446,7 @@ async def cmd_stats(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     c.close()
     await update.message.reply_text(f"Vendas {v[0]} | Fat {brl(v[1])} | chk 24h {q}")
 
-# ---------- garantia ----------
-def warranty_worker():
-    while True:
-        now = int(time.time())
-        c = db()
-        for o in c.execute("SELECT * FROM orders WHERE status='paid' AND warranty_until BETWEEN ? AND ?",
-                           (now, now + 60)).fetchall():
-            c.execute("UPDATE orders SET status='garantia_expirada' WHERE id=?", (o["id"],))
-            if LOOP:
-                asyncio.run_coroutine_threadsafe(
-                    BOT.send_message(o["user_id"], f"Garantia do #{o['id']} encerrada."), LOOP)
-        c.commit(); c.close()
-        time.sleep(30)
-   app.add_handler(CommandHandler("gerar", gerar))
-   app.add_handler(CommandHandler("resgatar", resgatar))
-def main():
-    global BOT, LOOP
-    init_db()
+
     
     app = Application.builder().token(TOKEN).build()
     BOT = app.bot

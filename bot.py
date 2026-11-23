@@ -254,7 +254,7 @@ async def handle_pix_response(update: Update, context: ContextTypes.DEFAULT_TYPE
                 return
 
             # Chamar API Gladepay
-            headers = {"Authorization": f"Bearer {GLADE_API_KEY}"}
+            headers = {"Authorization": f"Bearer {GLADE_API}"}
             payload = {
                 "value": int(valor * 100), # Gladepay costuma pedir em centavos
                 "description": f"PIX Recarga User {user_id}",
@@ -262,7 +262,7 @@ async def handle_pix_response(update: Update, context: ContextTypes.DEFAULT_TYPE
             }
             
             # Ajuste a URL exata da sua documentação Gladepay
-            url = f"{BASE_URL}/pix/create" 
+            url = f"{GLADE_URL}/pix/create" 
             
             resp = requests.post(url, json=payload, headers=headers)
             data = resp.json()
@@ -277,7 +277,7 @@ async def handle_pix_response(update: Update, context: ContextTypes.DEFAULT_TYPE
                 await update.message.reply_text(f"❌ Erro ao criar PIX: {data.get('message', str(data))}")
                 
         except ValueError:
-            await update.message.reply_text("⚠️ Digite um valor numérico válido (ex: 10.50)")
+            await update.message.reply_text("⚠️ Digite um valor numérico válido (ex: 10)" 20 ")
         finally:
             context.user_data['waiting_for_pix'] = False
 

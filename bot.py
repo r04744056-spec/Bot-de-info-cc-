@@ -184,7 +184,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
         "💰 **Depósito Pix**: /pix\n"
         "👤 **Meu Perfil**: /perfil")
 
-async def perfil(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
+async def perfil(update: Update, context: ContextTypes.DEFAULT_TIPE):
     user = update.effective_user
     saldo = pegar_saldo(user.id, user.first_name)
     await update.message.reply_text(f"💳 **Seu Perfil**\n\n👤 Nome: {user.first_name}\n💰 Saldo: R$ {saldo:.2f}")

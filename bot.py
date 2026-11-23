@@ -9,7 +9,8 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
 import re
 from datetime import datetime
-
+InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 # ================= CONFIGURAÇÕES =================
 load_dotenv()
 
@@ -277,7 +278,7 @@ async def handle_pix_response(update: Update, context: ContextTypes.DEFAULT_TYPE
                 await update.message.reply_text(f"❌ Erro ao criar PIX: {data.get('message', str(data))}")
                 
         except ValueError:
-            await update.message.reply_text("⚠️ Digite um valor numérico válido (ex: 10)" 20 ")
+            await update.message.reply_text("⚠️ Digite um valor numérico válido (ex: 10)")
         finally:
             context.user_data['waiting_for_pix'] = False
 

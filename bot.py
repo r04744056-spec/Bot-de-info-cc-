@@ -189,7 +189,7 @@ async def perfil(update: Update, context: ContextTypes.DEFAULT_TYPE):
     saldo = pegar_saldo(user.id, user.first_name)
     await update.message.reply_text(f"💳 **Seu Perfil**\n\n👤 Nome: {user.first_name}\n💰 Saldo: R$ {saldo:.2f}")
 
-async def comprar_cc(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
+async def comprar_cc(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Exemplo de compra de um CC específico ou lista
     # Aqui você pode integrar com a tabela produtos
     keyboard = [
@@ -198,7 +198,7 @@ async def comprar_cc(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text("Escolha uma opção:", reply_markup=reply_markup)
 
-async def chk_cartao(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
+async def chk_cartao(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
     Comando /chk cc:mes:ano:cvv
     Usa o CHK interno (sem Gladepay)
@@ -228,7 +228,7 @@ async def chk_cartao(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
                                     f"🏦 Status: {status}\n"
                                     f"ℹ️ Detalhe: {msg}")
 
-async def resgatar_command(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
+async def resgatar_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if len(context.args) < 1:
         await update.message.reply_text("Uso: /resgatar <codigo>")
         return
@@ -243,7 +243,7 @@ async def resgatar_command(update: Update, context: ContextTypes.DEFAULT_USER_DA
     else:
         await update.message.reply_text(f"❌ Erro:\n\n{msg}")
 
-async def pix_command(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
+async def pix_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     # Valor padrão ou pedido pelo usuário
     valor = float(context.args[0]) if context.args and context.args[0].replace('.','',1).isdigit() else 10.0
@@ -265,7 +265,7 @@ async def pix_command(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
     else:
         await update.message.reply_text("Erro ao conectar com Gladepay.")
 
-async def callback_handler(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
+async def callback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     

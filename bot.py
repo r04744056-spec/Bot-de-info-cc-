@@ -12,13 +12,13 @@ from datetime import datetime
 import threading
 
 # --- CONFIGURAÇÕES DO BOT ---
-API_TOKEN = 'SEU_TOKEN_AQUI'  # Substitua pelo seu token
+API_TOKEN = 'GLADE_API'  # Substitua pelo seu token
 STRIPE_SK = ''                # Mantenha vazio ou remova se não usar mais
-GLADE_KEY = 'SUA_CHAVE_GLADE_AQUI'
+GLADE_KEY = 'GLADE_URL'
 GLADE_MID = 'SEU_MERCHANT_ID_AQUI'
 
 # Inicializa o Bot
-bot = telebot.TeleBot(API_TOKEN)
+bot = telebot.TeleBot(BOT_TOKEN)
 
 # --- BANCO DE DADOS (SQLite) ---
 conn = sqlite3.connect('bot_database.db', check_same_thread=False)

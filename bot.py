@@ -437,7 +437,7 @@ def criar_pix_mp(valor, user_id, recarga_id):
     }
     r = requests.post(url, json=payload, headers=headers)
     return r.json()
-    ============ COMANDOS ============
+   # ============ COMANDOS ============
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     saldo = get_saldo(user.id)

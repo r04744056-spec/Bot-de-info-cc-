@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 import requests
 
 # Configurações do Bot e Gateway
-API_ID = "GLADE_API"
+API_ID = "ADMIN_ID"
 API_HASH = "GLADE_API"
 BOT_TOKEN = "ADMIN_ID"
 GLADE_PAY_API_URL = "GLADE_URL" # URL hipotética da API

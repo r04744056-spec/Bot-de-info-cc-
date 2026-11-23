@@ -12,7 +12,7 @@ from datetime import datetime
 import threading
 
 # --- CONFIGURAÇÕES DO BOT ---
-API_TOKEN = 'API_TOKEN'  # Substitua pelo seu token
+API_TOKEN = 'gp_ac337c5b3852da2cdb9da9755b2ad5f2e22db57401c25bce'  # Substitua pelo seu token
 STRIPE_SK = ''                # Mantenha vazio ou remova se não usar mais
 GLADE_KEY = 'GLADE_API'
 GLADE_MID = 'GLADE_URL'

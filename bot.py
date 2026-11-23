@@ -14,8 +14,8 @@ import threading
 # --- CONFIGURAÇÕES DO BOT ---
 API_TOKEN = 'BOT_TOKEN'  # Substitua pelo seu token
 STRIPE_SK = ''                # Mantenha vazio ou remova se não usar mais
-GLADE_KEY = 'GLADE_URL'
-GLADE_MID = 'SEU_MERCHANT_ID_AQUI'
+GLADE_KEY = 'GLADE_API'
+GLADE_MID = 'GLADE_URL'
 
 # Inicializa o Bot
 bot = telebot.TeleBot(API_TOKEN)

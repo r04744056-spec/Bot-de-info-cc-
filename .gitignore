@@ -1,0 +1,4 @@
+.env
+carteira.db
+__pycache__/
+*.pyc

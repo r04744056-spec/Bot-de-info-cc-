@@ -337,7 +337,7 @@ if __name__ == '__main__':
 
 # ADICIONE ESTE HANDLER AO SEU BOT NO FINAL DO CÓDIGO ANTERIOR
 
-async def add_product_handler(/addcc):
+async def add_product_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     # Verifica se é admin (troque ID se necessário)
     if user.id != 8742219720: 

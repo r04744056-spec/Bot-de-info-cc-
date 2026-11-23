@@ -14,10 +14,10 @@ import string
 # ================= CONFIGURAÇÕES =================
 load_dotenv()
 
-TOKEN = os.getenv("TELEGRAM_TOKEN")
-GLADE_API_KEY = os.getenv("GLADE_API_KEY")
+TOKEN = os.getenv("API_TOKEN")
+GLADE_API_KEY = os.getenv("GLADE_API")
 BASE_URL = "https://api.gladepay.com/v1" # URL Base da Gladepay
-CALLBACK_URL = os.getenv("CALLBACK_URL", "https://seu-bot-railway.vercel.app/callback") 
+CALLBACK_URL = os.getenv("CALLBACK_URL", "https://web-production-5539d78c.up.railway.app/") 
 ADMIN_ID = int(os.getenv("ADMIN_ID", "8742219720")) 
 
 app = Flask(__name__)

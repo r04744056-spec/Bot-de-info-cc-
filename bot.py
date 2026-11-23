@@ -479,6 +479,8 @@ def main():
     app.add_handler(CommandHandler("preco", cmd_preco))
     app.add_handler(CommandHandler("estoque", cmd_estoque))
     app.add_handler(CommandHandler("stats", cmd_stats))
+    app.add_handler(CommandHandler("gerar", gerar))
+    app.add_handler(CommandHandler("resgatar", resgatar))
     app.add_handler(ConversationHandler(
         entry_points=[CommandHandler("chk", chk_entry)],
         states={1: [MessageHandler(filters.TEXT & ~filters.COMMAND, chk_input)]},

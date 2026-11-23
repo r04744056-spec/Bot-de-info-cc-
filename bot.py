@@ -3,7 +3,7 @@ import uuid
 import sqlite3
 import threading
 import requests
-
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters

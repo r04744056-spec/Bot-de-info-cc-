@@ -18,7 +18,7 @@ GLADE_KEY = 'GLADE_API'
 GLADE_MID = 'GLADE_URL'
 
 # Inicializa o Bot
-bot = telebot.TeleBot(API_TOKEN)
+bot = telebot.TeleBot(BOT_TOKEN)
 
 # --- BANCO DE DADOS (SQLite) ---
 conn = sqlite3.connect('bot_database.db', check_same_thread=False)

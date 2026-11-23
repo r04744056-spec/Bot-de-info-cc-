@@ -9,8 +9,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
 import re
 from datetime import datetime
-import telebot
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 
 # ================= CONFIGURAÇÕES =================
 load_dotenv()

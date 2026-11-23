@@ -174,7 +174,7 @@ def criar_gift_card(valor, admin_id=None):
 
 # ================= TELEGRAM BOT =================
 
-async def start(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     await update.message.reply_text(
         f"Olá {user.first_name}! 👋\n\n"

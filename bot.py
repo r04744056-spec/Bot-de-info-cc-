@@ -263,7 +263,7 @@ async def handle_pix_response(update: Update, context: ContextTypes.DEFAULT_TYPE
             }
             
             # Ajuste a URL exata da sua documentação Gladepay
-            url = f"{GLADE_URL}/pix/create" 
+            url = f"{gp_ac337c5b3852da2cdb9da9755b2ad5f2e22db57401c25bce}/api/v1/pix/create" 
             
             resp = requests.post(url, json=payload, headers=headers)
             data = resp.json()

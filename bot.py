@@ -93,7 +93,7 @@ async def botoes(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await q.message.reply_text("⏳ Gerando seu PIX, aguarda...")
         try:
             pix = criar_pix_gladepay(user.id, valor)
-            texto = f"✅ PIX GERADO\n\n🪪 ID: {user.id}\n💰 Valor: R$ {valor:.2f}\n🧾 Taxa: R$ {pix['fee']}\n💵 Você recebe: R$ {pix['netAmount']}\n⏰ Validade: 1 hora\n\n📋 Copia e cola:\n`{pix['qrCodeText']}`\n\nApós pagar, seu saldo cai sozinho aqui."
+            texto = f"✅ PIX GERADO\n\n🪪 ID: {user.id}\n💰 Valor: R$ {valor:.2f}\n⏰ Validade: 1 hora\n\n📋 Copia e cola:\n`{pix['qrCodeText']}`\n\nApós pagar, seu saldo cai sozinho aqui."
             if pix['qrCodeUrl']:
                 await q.message.reply_photo(photo=pix['qrCodeUrl'], caption=texto, parse_mode="Markdown")
             else:

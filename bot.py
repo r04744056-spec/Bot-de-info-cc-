@@ -463,6 +463,7 @@ def warranty_worker():
 def main():
     global BOT, LOOP
     init_db()
+    init_gifts()
     app = Application.builder().token(TOKEN).build()
     BOT = app.bot
     LOOP = asyncio.get_event_loop()

@@ -18,7 +18,7 @@ GLADE_KEY = 'GLADE_URL'
 GLADE_MID = 'SEU_MERCHANT_ID_AQUI'
 
 # Inicializa o Bot
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.TeleBot(API_TOKEN)
 
 # --- BANCO DE DADOS (SQLite) ---
 conn = sqlite3.connect('bot_database.db', check_same_thread=False)

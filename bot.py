@@ -17,7 +17,7 @@ TOKEN = os.getenv("TELEGRAM_TOKEN")
 GLADE_API_KEY = os.getenv("GLADE_API_KEY")
 BASE_URL = os.getenv("GLADE_BASE_URL", "https://api.gladepay.com/v1") # Ajuste se necessário
 CALLBACK_URL = os.getenv("CALLBACK_URL", "https://seusite.com/callback") # Exemplo genérico
-ADMIN_ID = 8742219720 # <-- TROQUE PELO SEU ID NUMÉRICO DO TELEGRAM
+ADMIN_ID = 8742219720  # <-- TROQUE PELO SEU ID NUMÉRICO DO TELEGRAM
 
 app = Flask(__name__)
 

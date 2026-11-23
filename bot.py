@@ -48,38 +48,6 @@ conn.commit()
 
 # ================= FUNÇÕES AUXILIARES =================
 
-# --- ESTOQUE / ABASTECER ---
-SEU_ID = 8742219720 # <- coloca seu ID do Telegram aqui
-
-ESTOQUE = {
-    "seguidores_1000": 100,
-    "seguidores_5000": 50,
-    "curtidas_1000": 200,
-}
-
-@bot.message_handler(commands=['abastecer'])
-def abastecer(message):
-    if message.from_user.id != SEU_ID:
-        bot.reply_to(message, "Você não tem permissão.")
-        return
-
-    # Uso: /abastecer seguidores_1000 50
-    try:
-        _, produto, qtd = message.text.split()
-        qtd = int(qtd)
-        ESTOQUE[produto] = ESTOQUE.get(produto, 0) + qtd
-        bot.reply_to(message, f"✅ Abastecido!\n\nProduto: {produto}\nAdicionado: {qtd}\nEstoque agora: {ESTOQUE[produto]}")
-    except:
-        bot.reply_to(message, "Uso certo:\n/abastecer seguidores_1000 50\n\nProdutos que você tem:\n" + "\n".join(ESTOQUE.keys()))
-
-@bot.message_handler(commands=['estoque'])
-def ver_estoque(message):
-    if message.from_user.id != SEU_ID:
-        return
-    texto = "📦 Seu estoque:\n\n"
-    for produto, qtd in ESTOQUE.items():
-        texto += f"{produto}: {qtd}\n"
-    bot.reply_to(message, texto)
 
 def pegar_saldo(uid, nome=""):
     cur.execute("SELECT saldo FROM carteira WHERE user_id=?", (uid,))
@@ -168,10 +136,11 @@ def saldo(call):
 
 @bot.callback_query_handler(func=lambda call: call.data == "comprar")
 def comprar(call):
-    # seu código de comprar
-    pass
-
+    markup = InlineKeyboardMarkup()
+    markup.add(InlineKeyboardButton("📦 Estoque Novo", callback_data="estoque_novo"))
+    bot.send_message(call.message.chat.id, "Qual você quer?", reply_markup=markup)
 bot.polling()
+
 # ================= TELEGRAM BOT =================
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):

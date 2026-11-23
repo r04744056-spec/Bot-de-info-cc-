@@ -183,7 +183,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_USER_DATA):
         "🎁 **Resgatar Gift Card**: /resgatar <codigo>\n"
         "💰 **Depósito Pix**: /pix\n"
         "👤 **Meu Perfil**: /perfil"
-    )):
+    ):
     user = update.effective_user
     await update.message.reply_text(
         f"Olá {user.first_name}! 👋\n\n"

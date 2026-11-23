@@ -5,9 +5,9 @@ import requests
 # Configurações do Bot e Gateway
 API_ID = "SEU_API_ID"
 API_HASH = "SEU_API_HASH"
-BOT_TOKEN = "SEU_BOT_TOKEN"
-GLADE_PAY_API_URL = "https://api.gladepay.com/v1/charge" # URL hipotética da API
-GLADE_PAY_TOKEN = "SEU_TOKEN_GLADE_PAY"
+BOT_TOKEN = "ADMIN_ID"
+GLADE_PAY_API_URL = "GLADE_URL" # URL hipotética da API
+GLADE_PAY_TOKEN = "GLADE_API"
 
 app = Client("card_checker_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 

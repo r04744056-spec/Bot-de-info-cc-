@@ -392,3 +392,48 @@ async def add_product_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
 # application.add_handler(CommandHandler("addcc", lambda u, c: setattr(c.user_data, 'waiting_for_add', True) or add_product_handler(u, c)))
 # Ou melhor, use um CommandHandler separado:
 # application.add_handler(CommandHandler("addcc", start_add_mode))
+   # ============ BANCO ============
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("""CREATE TABLE IF NOT EXISTS carteiras (user_id INTEGER PRIMARY KEY, saldo REAL DEFAULT 0)""")
+    c.execute("""CREATE TABLE IF NOT EXISTS recargas (id TEXT PRIMARY KEY, user_id INTEGER, valor REAL, status TEXT)""")
+    c.execute("""CREATE TABLE IF NOT EXISTS mp_pagamentos (recarga_id TEXT PRIMARY KEY, payment_id TEXT)""")
+    c.execute("""CREATE TABLE IF NOT EXISTS gifts (codigo TEXT PRIMARY KEY, valor REAL, usado INTEGER DEFAULT 0, usado_por INTEGER)""")
+    c.execute("""CREATE TABLE IF NOT EXISTS pedidos (id TEXT PRIMARY KEY, user_id INTEGER, plano TEXT, preco REAL, status TEXT)""")
+    conn.commit()
+    conn.close()
+
+init_db()
+
+def get_saldo(user_id):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("INSERT OR IGNORE INTO carteiras VALUES (?, 0)", (user_id,))
+    c.execute("SELECT saldo FROM carteiras WHERE user_id=?", (user_id,))
+    saldo = c.fetchone()[0]
+    conn.commit()
+    conn.close()
+    return saldo
+
+def add_saldo(user_id, valor):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("INSERT OR IGNORE INTO carteiras VALUES (?, 0)", (user_id,))
+    c.execute("UPDATE carteiras SET saldo = saldo + ? WHERE user_id=?", (valor, user_id))
+    conn.commit()
+    conn.close()
+
+# ============ MERCADO PAGO ============
+def criar_pix_mp(valor, user_id, recarga_id):
+    url = "https://web-production-73dbd.up.railway.app/docs"
+    headers = {"Authorization": f"Bearer {MP_TOKEN}", "Content-Type": "application/json", "X-Idempotency-Key": recarga_id}
+    payload = {
+        "transaction_amount": float(valor),
+        "description": f"Recarga carteira - {recarga_id}",
+        "payment_method_id": "pix",
+        "payer": {"email": f"user{user_id}@loja.com", "first_name": "Cliente", "last_name": "Loja"},
+        "external_reference": recarga_id
+    }
+    r = requests.post(url, json=payload, headers=headers)
+    return r.json()

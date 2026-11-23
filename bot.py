@@ -15,7 +15,7 @@ TOKEN = os.getenv("TELEGRAM_TOKEN")
 GLADE_API_KEY = os.getenv("GLADE_API_KEY")
 BASE_URL = os.getenv("GLADE_BASE_URL")
 CALLBACK_URL = os.getenv("CALLBACK_URL")
-ENDPOINT_CRIAR_PIX = "/deposits"
+ENDPOINT_CRIAR_PIX = "/pix/create"
 # ============================================================
 
 # ===== BANCO =====

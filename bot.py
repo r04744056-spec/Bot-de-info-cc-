@@ -127,7 +127,7 @@ def gp_create(user, amount):
             "currency": CURRENCY, "merchant_tx_ref": ref}
     r = requests.post(f"{GLADE_BASE}"/api/v1/pix/create, json=body, headers=H(), timeout=25)
     print("STATUS:", r.status_code)
-print("RESPOSTA:", r.text[:500])  # mostra os primeiros 500 caracteres
+    print("RESPOSTA:", r.text[:500])  # mostra os primeiros 500 caracteres
     j = r.json()
     q("INSERT INTO invoices(user_id,amount,ref,at) VALUES(?,?,?,?)", (user.id, amount, ref, int(time.time())))
     return ref, j

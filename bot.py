@@ -15,7 +15,7 @@ LABEL = os.environ.get("CUR_LABEL", "R$")
 CURRENCY = os.environ.get("CURRENCY", "NGN")
 COUNTRY = os.environ.get("COUNTRY", "NG")
 GLADE_BASE = os.environ.get("GLADE_BASE", "https://web-production-73dbd.up.railway.app/api/v1")
-GKEY, GMID = os.environ.get("GLADE_KEY", ""), os.environ.get("GLADE_MID", "")
+GKEY, GMID = os.environ.get("GLADE_MIG", ""), os.environ.get("GLADE_MID", "")
 GSECRET = os.environ.get("GLADE_KEY", "troque")
 SK = os.environ.get("STRIPE_SK", "")
 

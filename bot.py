@@ -5,7 +5,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
 
 # --- CONFIGURAÇÕES ---
-BOT_TOKEN = "BOT_TOKEN" # Coloque seu token do BotFather aqui
+BOT_TOKEN = "9154649902:AAFYHPeK2rroBfnfLKW6S2tb9wiSKPk9e34" # Coloque seu token do BotFather aqui
 ADMIN_ID = "ADMIN_ID"        # SEU ID NUMÉRICO AQUI
 
 # URLs dos serviços

@@ -6,7 +6,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, Callb
 
 # --- CONFIGURAÇÕES ---
 BOT_TOKEN = "9154649902:AAFYHPeK2rroBfnfLKW6S2tb9wiSKPk9e34" # Coloque seu token do BotFather aqui
-ADMIN_ID = "ADMIN_ID"        # SEU ID NUMÉRICO AQUI
+ADMIN_ID = "8742219720"        # SEU ID NUMÉRICO AQUI
 
 # URLs dos serviços
 CHK_URL = "http://143.20.50.71/cielo/"

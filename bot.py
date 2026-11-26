@@ -5,12 +5,12 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
 
 # --- CONFIGURAÇÕES ---
-BOT_TOKEN = "SEU_TOKEN_AQUI" # Coloque seu token do BotFather aqui
+BOT_TOKEN = "BOT_TOKEN" # Coloque seu token do BotFather aqui
 ADMIN_ID = 123456789          # SEU ID NUMÉRICO AQUI
 
 # URLs dos serviços
 CHK_URL = "http://143.20.50.71/cielo/"
-GLADE_API = "SUA_CHAVE_GLADE_AQUI"
+GLADE_API = "GLADD_API"
 GLADE_BASE = "https://web-production-73dbd.up.railway.app/api/v1"
 
 # Simulação de Banco de Dados
